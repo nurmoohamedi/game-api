@@ -5,9 +5,15 @@ import (
 
 	"github.com/nurmoohamedi/game-api/handlers"
 	"github.com/nurmoohamedi/game-api/middleware"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	_ "github.com/nurmoohamedi/game-api/docs" // сгенерированные доки
 )
 
 func RegisterRoutes(router *gin.Engine) {
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	
 	router.POST("/register", handlers.Register)
 	router.POST("/login", handlers.Login)
 

@@ -8,6 +8,18 @@ import (
 	"github.com/nurmoohamedi/game-api/models"
 )
 
+// CreateCharacter godoc
+// @Summary Создать персонажа для игры
+// @Tags characters
+// @Accept json
+// @Produce json
+// @Param id path int true "ID игры"
+// @Param character body models.Character true "Данные персонажа"
+// @Security BearerAuth
+// @Success 201 {object} models.Character
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Router /games/{id}/characters [post]
 func CreateCharacter(c *gin.Context) {
 	gameID := c.Param("id")
 
@@ -32,6 +44,14 @@ func CreateCharacter(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, character)
 }
 
+// GetCharactersByGame godoc
+// @Summary Получить всех персонажей для игры
+// @Tags characters
+// @Produce json
+// @Param id path int true "ID игры"
+// @Success 200 {array} models.Character
+// @Failure 404 {object} map[string]string
+// @Router /games/{id}/characters [get]
 func GetCharactersByGame(c *gin.Context) {
 	var gameID = c.Param("id")
 
@@ -41,6 +61,14 @@ func GetCharactersByGame(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, characters)
 }
 
+// GetCharacterById godoc
+// @Summary Получить персонажа по ID
+// @Tags characters
+// @Produce json
+// @Param id path int true "ID персонажа"
+// @Success 200 {object} models.Character
+// @Failure 404 {object} map[string]string
+// @Router /characters/{id} [get]
 func GetCharacterById(c *gin.Context) {
 	id := c.Param("id")
 
@@ -52,6 +80,18 @@ func GetCharacterById(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, character)
 }
 
+// UpdateCharacter godoc
+// @Summary Обновить персонажа
+// @Tags characters
+// @Accept json
+// @Produce json
+// @Param id path int true "ID персонажа"
+// @Param character body models.Character true "Данные персонажа"
+// @Security BearerAuth
+// @Success 200 {object} models.Character
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Router /characters/{id} [put]
 func UpdateCharacter(c *gin.Context) {
 	id := c.Param("id")
 
@@ -70,6 +110,15 @@ func UpdateCharacter(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, character)
 }
 
+// DeleteCharacter godoc
+// @Summary Удалить персонажа
+// @Tags characters
+// @Produce json
+// @Param id path int true "ID персонажа"
+// @Security BearerAuth
+// @Success 200 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Router /characters/{id} [delete]
 func DeleteCharacter(c *gin.Context) {
 	id := c.Param("id")
 

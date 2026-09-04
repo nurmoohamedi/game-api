@@ -23,6 +23,15 @@ type loginInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+// @Summary Регистрация пользователя
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param user body registerInput true "Данные пользователя"
+// @Success 201 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 409 {object} map[string]string
+// @Router /register [post]
 func Register(c *gin.Context) {
 	var input registerInput
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -49,6 +58,15 @@ func Register(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
 }
 
+// @Summary Вход пользователя
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param user body loginInput true "Данные пользователя"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Router /login [post]
 func Login(c *gin.Context) {
 	var input loginInput
 	if err := c.ShouldBindJSON(&input); err != nil {

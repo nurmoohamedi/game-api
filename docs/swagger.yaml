@@ -1,0 +1,397 @@
+basePath: /
+definitions:
+  handlers.loginInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  handlers.registerInput:
+    properties:
+      password:
+        minLength: 8
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  models.Character:
+    type: object
+  models.Game:
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: REST API для управления играми и персонажами
+  title: Game API
+  version: "1.0"
+paths:
+  /characters/{id}:
+    delete:
+      parameters:
+      - description: ID персонажа
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить персонажа
+      tags:
+      - characters
+    get:
+      parameters:
+      - description: ID персонажа
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Character'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Получить персонажа по ID
+      tags:
+      - characters
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID персонажа
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные персонажа
+        in: body
+        name: character
+        required: true
+        schema:
+          $ref: '#/definitions/models.Character'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Character'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Обновить персонажа
+      tags:
+      - characters
+  /games:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Game'
+            type: array
+      summary: Список игр
+      tags:
+      - games
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные игры
+        in: body
+        name: game
+        required: true
+        schema:
+          $ref: '#/definitions/models.Game'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Game'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Создать игру
+      tags:
+      - games
+  /games/{id}:
+    delete:
+      parameters:
+      - description: ID игры
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить игру
+      tags:
+      - games
+    get:
+      parameters:
+      - description: ID игры
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Game'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Получить игру по ID
+      tags:
+      - games
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID игры
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные игры
+        in: body
+        name: game
+        required: true
+        schema:
+          $ref: '#/definitions/models.Game'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Game'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Обновить игру
+      tags:
+      - games
+  /games/{id}/characters:
+    get:
+      parameters:
+      - description: ID игры
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Character'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Получить всех персонажей для игры
+      tags:
+      - characters
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID игры
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные персонажа
+        in: body
+        name: character
+        required: true
+        schema:
+          $ref: '#/definitions/models.Character'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Character'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Создать персонажа для игры
+      tags:
+      - characters
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные пользователя
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.loginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Вход пользователя
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные пользователя
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.registerInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Регистрация пользователя
+      tags:
+      - auth
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
