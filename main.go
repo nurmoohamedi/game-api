@@ -8,6 +8,7 @@ import (
 
 	"github.com/nurmoohamedi/game-api/db"
 	"github.com/nurmoohamedi/game-api/models"
+	"github.com/nurmoohamedi/game-api/routes"
 )
 
 func main() {
@@ -23,6 +24,8 @@ func main() {
 
 	router := gin.Default()
 
+	// Register routes
+	routes.RegisterRoutes(router)
 	// Health check endpoint
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{
