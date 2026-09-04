@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: game-api-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: game_api
+    ports:
+      - "5432:5432"
+    volumes:
+      - game-api-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  game-api-pgdata:
