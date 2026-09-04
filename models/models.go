@@ -16,3 +16,9 @@ type Character struct {
 	Class string `json:"class"`
 	GameID uint `json:"game_id"`
 }
+
+type User struct {
+	gorm.Model
+	Username     string `json:"username" gorm:"unique"`
+	PasswordHash string `json:"-"`
+}

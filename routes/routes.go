@@ -24,4 +24,6 @@ func RegisterRoutes(router *gin.Engine) {
 		characters.PUT("/:id", handlers.UpdateCharacter)
 		characters.DELETE("/:id", handlers.DeleteCharacter)
 	}
+
+	router.POST("/register", handlers.Register)
 }

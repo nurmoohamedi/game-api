@@ -18,7 +18,7 @@ func main() {
 
 	db.Connect()
 
-	if err := db.DB.AutoMigrate(&models.Game{}, &models.Character{}); err != nil {
+	if err := db.DB.AutoMigrate(&models.Game{}, &models.Character{}, &models.User{}); err != nil {
 		log.Fatal("Failed to migrate database:", err)
 	}
 
