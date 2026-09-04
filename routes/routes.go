@@ -26,4 +26,5 @@ func RegisterRoutes(router *gin.Engine) {
 	}
 
 	router.POST("/register", handlers.Register)
+	router.POST("/login", handlers.Login)
 }
